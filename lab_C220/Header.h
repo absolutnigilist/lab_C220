@@ -61,3 +61,13 @@ auto SumCont(const T& t, const U& u) {
 	}
 	return result;
 }
+
+template<typename T, typename ContainerOne, typename ContainerTwo,typename Predicate>
+void Separate(T t, ContainerOne & one, ContainerTwo& two,Predicate predicate) {
+	std::copy_if(t.begin(), t.end(), std::inserter(one, one.end()), predicate);
+	std::copy_if(t.begin(), t.end(), std::inserter(two, two.end()),
+		[&](const auto& elem) {
+			return !predicate(elem);
+		}
+	);
+}
