@@ -3,7 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <map>
-#include<algorithm>
+#include <algorithm>
+#include <list>
 
 
 //Практика 1:
@@ -115,51 +116,50 @@ int main()
 			}
 			std::cout << std::endl;
 		}
+		std::cout << std::endl;
+		__asm nop
+	}
 
+
+	/*********************************************************/
+		//Задание 4. создать функцию для вывода на печать
+		//элементов последовательностей, заданных ниже:
+	{
+		std::vector<double> vd = { 1.1,2.2,3.3 };
+		PrintAnyCont(vd);
+
+		std::string s("abc");
+		PrintAnyCont(s);
+
+		int ar[] = { 1, 2, 3 };
+		PrintAnyCont(ar);
+
+		std::initializer_list<int> il{ 3,4,5 };
+		PrintAnyCont(il);		
 
 		__asm nop
 	}
 
 
-	///*********************************************************/
-	//	//Задание 4. создать функцию для вывода на печать
-	//	//элементов последовательностей, заданных ниже:
-	//{
-	//	std::vector<double> vd = { 1.1,2.2,3.3 };
-	//	//PrintAnyCont(vd);
+	/********************************************************/
+		///Задание 5. 	
+		//Cоздать функцию для "отрицания" значений, например:
+		//было: {1, -2, 5}, стало: {-1, 2, -5})
+		//изменение объектов типа std::string может выглядеть "aBc1" -> "AbC1"
+		//элементов последовательностей, заданных ниже:
+	{
+		std::vector<double> vd{ 1.1,2.2,3.3 };
+		NegateAll(vd);
 
-	//	std::string s("abc");
-	//	//PrintAnyCont(s);
+		std::list<std::string> ls{ "aBc", "Qwerty", "n12" };
+		NegateAll(ls);
 
-	//	int ar[] = { 1, 2, 3 };
-	//	//PrintAnyCont(ar);
+		int ar[]{ 1, 2, 3 };
+		NegateAll(ar);
 
-	//	std::initializer_list<int> il{ 3,4,5 };
-	//	//PrintAnyCont(il);		
+		__asm nop
 
-	//	__asm nop
-	//}
-
-
-	///********************************************************/
-	//	///Задание 5. 	
-	//	//Cоздать функцию для "отрицания" значений, например:
-	//	//было: {1, -2, 5}, стало: {-1, 2, -5})
-	//	//изменение объектов типа std::string может выглядеть "aBc1" -> "AbC1"
-	//	//элементов последовательностей, заданных ниже:
-	//{
-	//	std::vector<double> vd{ 1.1,2.2,3.3 };
-	//	//NegateAll(vd);
-
-	//	std::list<std::string> ls{ "aBc", "Qwerty", "n12" };
-	//	//NegateAll(ls);
-
-	//	int ar[]{ 1, 2, 3 };
-	//	//NegateAll(ar);
-
-	//	__asm nop
-
-	//}
+	}
 
 
 	///********************************************************/
