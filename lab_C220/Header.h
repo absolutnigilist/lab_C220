@@ -3,6 +3,7 @@
 #include <list>
 #include <algorithm>
 #include <vector>
+#include <map>
 
 template<typename T>
 void PrintAnyCont(T& t) {					//шаблон функции для печати контейнера
@@ -80,4 +81,45 @@ void Separate(const T& t, ContainerOne& one, ContainerTwo& two, Predicate predic
 			return !predicate(elem);
 		}
 	);
+}
+
+enum class COLORS:unsigned char {BLUE,GREEN,RED};
+
+template<typename T>
+std::map<T,std::string> enumToStringMap;
+
+template<typename T>
+std::map<std::string, T> stringToEnumMap;
+
+template<>
+std::map<COLORS, std::string> enumToStringMap<COLORS> {
+	{COLORS::BLUE,"blue"},
+	{COLORS::GREEN,"green"},
+	{COLORS::RED,"red"}
+
+};
+template<>
+std::map<std::string, COLORS>stringToEnumMap<COLORS>{
+	{"blue",COLORS::BLUE},
+	{"green",COLORS::GREEN},
+	{"red",COLORS::RED}
+};
+
+template<typename T>
+std::string enumToString(T& t) {
+	auto it = enumToStringMap<T>.find(t);
+	if (it!=enumToStringMap.end())
+	{
+		return it->second;
+	}
+	throw std::runtime_error("Enum value not foud");
+}
+
+template<typename T>
+T stringToEnum(const std::string& str) {
+	auto it = stringToEnumMap<T>.find(str);
+	if (it!=stringToEnumMap.end())
+	{
+		return it->second;
+	}throw std::runtime_error("String value not found")
 }
