@@ -41,18 +41,18 @@ void absSort(T& t) {
 	);
 }
 
-template<typename T, typename U>
+template<typename T, typename U>																		//шаблон функции дл€ суммировани€ значений контейнеров 
 auto SumCont(const T& t, const U& u) {
-	using SumType = decltype(*std::begin(t) + *std::begin(u));
+	using SumType = decltype(*std::begin(t) + *std::begin(u));											//после не€ного приведени€ c помощью decltype определ€ем тип контейнера 
 
-	std::vector<SumType> result(std::max(std::size(t), std::size(u)), SumType());
-	auto minSize = std::min(std::size(t), std::size(u));
-	std::transform(std::begin(t), std::next(std::begin(t), minSize), std::begin(u), std::begin(result),
+	std::vector<SumType> result(std::max(std::size(t), std::size(u)), SumType());						//создаем пустой вектор типа <SumType> размером бќльшего контейнера
+	auto minSize = std::min(std::size(t), std::size(u));												//находим минимальный размер из двух исходных контйенров
+	std::transform(std::begin(t), std::next(std::begin(t), minSize), std::begin(u), std::begin(result),	//с помощью transform и предиката заполн€ем вектор минимальным количеством значений
 		[](const auto& a, const auto& b) {
 			return a + b;
 		}
 	);
-	if (std::size(t) > std::size(u))
+	if (std::size(t) > std::size(u))																	//копируем оставшиес€ элементы исходного бќльшего контейнера в итоговый вектор
 	{
 		std::copy(std::next(std::begin(t), minSize), std::end(t), std::next(std::begin(result), minSize));
 	}
@@ -60,7 +60,7 @@ auto SumCont(const T& t, const U& u) {
 	{
 		std::copy(std::next(std::begin(u), minSize), std::end(u), std::next(std::begin(result), minSize));
 	}
-	return result;
+	return result;																						
 }
 
 //template<typename T, typename ContainerOne, typename ContainerTwo,typename Predicate>
@@ -73,19 +73,19 @@ auto SumCont(const T& t, const U& u) {
 //	);
 //}
 
-template<typename T, typename ContainerOne, typename ContainerTwo, typename Predicate>
-void Separate(const T& t, ContainerOne& one, ContainerTwo& two, Predicate predicate) {
-	std::copy_if(std::begin(t), std::end(t), std::inserter(one, one.end()), predicate);
-	std::copy_if(std::begin(t), std::end(t),std::inserter(two, two.end()),
+template<typename T, typename ContainerOne, typename ContainerTwo, typename Predicate>					//шаблон функции дл€ сортировки значений исход€ из четности по контейнерам		
+void Separate(const T& t, ContainerOne& one, ContainerTwo& two, Predicate predicate) {					//функци€ принимает по ссылке исходный контейнер, два конечных контейнера и предикат
+	std::copy_if(std::begin(t), std::end(t), std::inserter(one, one.end()), predicate);					//на основе предиката заполн€ем первый контейнер нечетными значени€ми
+	std::copy_if(std::begin(t), std::end(t),std::inserter(two, two.end()),								//на основе предиката л€мбда-функции заполн€ем второй контейнер четными значени€ми
 		[&](const auto& elem) {
 			return !predicate(elem);
 		}
 	);
 }
 
-enum class COLORS:unsigned char {BLUE,GREEN,RED};
+enum class COLORS:unsigned char {BLUE,GREEN,RED};														
 
-template<typename T>
+template<typename T>																					
 std::map<T,std::string> enumToStringMap;
 
 template<typename T>
@@ -99,16 +99,16 @@ std::map<COLORS, std::string> enumToStringMap<COLORS> {
 
 };
 template<>
-std::map<std::string, COLORS>stringToEnumMap<COLORS>{
+std::map<std::string, COLORS>stringToEnumMap<COLORS> {
 	{"blue",COLORS::BLUE},
 	{"green",COLORS::GREEN},
 	{"red",COLORS::RED}
 };
 
 template<typename T>
-std::string enumToString(T& t) {
+std::string enumToString(const T& t) {
 	auto it = enumToStringMap<T>.find(t);
-	if (it!=enumToStringMap.end())
+	if (it!=enumToStringMap<T>.end())
 	{
 		return it->second;
 	}
@@ -118,8 +118,8 @@ std::string enumToString(T& t) {
 template<typename T>
 T stringToEnum(const std::string& str) {
 	auto it = stringToEnumMap<T>.find(str);
-	if (it!=stringToEnumMap.end())
+	if (it!=stringToEnumMap<T>.end())
 	{
 		return it->second;
-	}throw std::runtime_error("String value not found")
+	}throw std::runtime_error("String value not found");
 }

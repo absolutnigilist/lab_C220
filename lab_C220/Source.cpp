@@ -305,9 +305,9 @@ int main()
 			try {
 				c1 = stringToEnum<COLORS>("blue");
 			}
-			catch (...)
+			catch (std::exception& e)
 			{
-			//...
+			std::cout<<"Error: "<<e.what()<<std::endl;
 			}
 
 
