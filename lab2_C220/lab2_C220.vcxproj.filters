@@ -18,12 +18,21 @@
     <ClCompile Include="Source.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MyString.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyClass.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="MyVector.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MyUniquePTR.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MyString.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,12 +15,12 @@ class MyClass {
 public:
 	MyClass(T lower, T upper) :lower_bound(lower), upper_bound(upper) {}					//конструктор класса
 
-	//MyClass(){}																			//конструктор по умолчанию сгенерирует компилятор																		
-	//~MyClass() {}																			//дестуктор сгенерирует компилятор
-	//MyClass(const MyClass& other)															//конструктор копирования сгенерирует компилятор
-	//MyClass(MyClass&& oter)																//перемещающий конструктор копирования сгенерирует компилятор
-	//MyClass& operator=(const MyClass& other)												//оператор присванивания сгенерирует компилятор
-	//MyClass& operator=(MYClass&& other)													//перемещающий оператор присванивания сгенерирует компилятор
+	MyClass() = default;																	//конструктор по умолчанию сгенерирует компилятор																		
+	~MyClass() = default;																	//дестуктор сгенерирует компилятор
+	MyClass(const MyClass& other) = default;												//конструктор копирования сгенерирует компилятор
+	MyClass(MyClass&& oter) = default;														//перемещающий конструктор копирования сгенерирует компилятор
+	MyClass& operator=(const MyClass& other) = default;										//оператор присванивания сгенерирует компилятор
+	MyClass& operator=(MyClass&& other) = default;											//перемещающий оператор присванивания сгенерирует компилятор
 
 	void add(const std::initializer_list<T>& list) {										//метод для добавления значений				
 		for (const auto& val : list) {														//пробегаем по вектору

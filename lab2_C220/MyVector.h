@@ -6,19 +6,20 @@
 #include <iostream>
 
 template<typename T>
-class myVector: private std::vector<T> {
+class MyVector: private std::vector<T> {
 	T lower_bound, upper_bound;
 	bool isValid(const T& value) {
 		return (value >= this->lower_bound && value <= this->upper_bound);
 	}
 public:
-	myVector(const T& lower, const T& upper) :lower_bound(lower), upper_bound(upper) {}
-	//MyClass(){}																			//конструктор по умолчанию сгенерирует компилятор																		
-	//~MyClass() {}																			//дестуктор сгенерирует компилятор
-	//MyClass(const MyClass& other)															//конструктор копирования сгенерирует компилятор
-	//MyClass(MyClass&& oter)																//перемещающий конструктор копирования сгенерирует компилятор
-	//MyClass& operator=(const MyClass& other)												//оператор присванивания сгенерирует компилятор
-	//MyClass& operator=(MYClass&& other)													//перемещающий оператор присванивания сгенерирует компилятор
+	MyVector(const T& lower, const T& upper) :lower_bound(lower), upper_bound(upper) {}
+
+	MyVector() = default;																	//конструктор по умолчанию сгенерирует компилятор																		
+	~MyVector() = default;																	//дестуктор сгенерирует компилятор
+	MyVector(const MyVector& other) = default;												//конструктор копирования сгенерирует компилятор
+	MyVector(MyVector&& oter) = default;														//перемещающий конструктор копирования сгенерирует компилятор
+	MyVector& operator=(const MyVector& other) = default;										//оператор присванивания сгенерирует компилятор
+	MyVector& operator=(MyVector&& other) = default;											//перемещающий оператор присванивания сгенерирует компилятор
 	
 	void add(const std::initializer_list<T>& list) {
 		for (const auto& val : list) {
