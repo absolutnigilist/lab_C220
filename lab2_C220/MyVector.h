@@ -45,6 +45,9 @@ public:
 
 		}
 	}
+	void sort() {
+		std::sort(this->begin(), this->end());
+	}
 	template<typename Compare>
 	void sort(Compare comparator) {
 		std::sort(this->begin(), this->end(), comparator);

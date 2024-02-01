@@ -24,6 +24,7 @@ my_Class.clear();														//очищаем вектор
 MyVector<int> my_Vector(-10, 10);										//инициализируем границы значений
 my_Vector.setLowerBound(2);												//изменяем границу
 my_Vector.add({ 1,15,-2,2,14,3,6,5,10,7 });								//добавляем значения в вектор 
+my_Vector.sort();
 my_Vector.sort([](int a, int b) {return a < b; });						//с помощью шаблонного метода и лямбда-функции в качестве параметра сортируем по ВОЗРАСТАНИЮ
 my_Vector.del({ 3,7 });													//удаляем значения
 size_t size_vec=my_Vector.size();										//размер вектора

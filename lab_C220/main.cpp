@@ -155,6 +155,8 @@ int main()
 
 		std::list<std::string> ls{ "aBc", "Qwerty", "n12" };
 		NegateAll(ls);
+		std::vector<std::string> vs{ "aBc", "Qwerty", "n12" };
+		NegateAll(vs);
 
 		int ar[]{ 1, 2, 3 };
 		NegateAll(ar);

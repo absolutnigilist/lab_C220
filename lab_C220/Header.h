@@ -13,24 +13,29 @@ void PrintAnyCont(T& t) {					//шаблон функции для печати контейнера
 	std::cout << std::endl;
 }
 
-template<typename T>						
-void NegateAll(T& t) {						//шаблон функции для инверсии значений
+template<typename T>						//перегруженная функция для инверсии арифметического типа
+void isType(T& t,std::true_type) {			//шаблон функции для инверсии значений
 	for (auto& val : t) {					//с помощью range-based for пробегаем по контейнеру
-		val = -val;							//инверсия значений
+		val = -val;							//инверсия значений 
 	}
 }
-
-template<>									//специалищация шаблонной функции
-void NegateAll(std::list<std::string>& ls) {//для контейнера типа list<string>
-	for (auto& str : ls) {					//с помощью range-based for пробегаем по контейнеру
-		for (auto& ch : str) {				//с помощью range-based for пробегаем по строкам
-			if (std::isalpha(ch))			//если символ буква
+template<typename T>						//перегруженная функция для инверсии контецнеров
+void isType(T& t,std::false_type) {
+	for (auto& val:t) {
+		for (auto& str : val) {
+			if (std::isalpha(str))			//если символ буква
 			{
-				ch = std::isupper(ch) ? std::tolower(ch) : std::toupper(ch);//меняем регистр
+				str = std::isupper(str) ? std::tolower(str) : std::toupper(str);//меняем регистр
 			}
 		}
 	}
 }
+template<typename T>
+void NegateAll(T& t) {
+	using Valuetype = typename std::remove_reference<decltype(*std::begin(t))>::type;//определяем тип параметра
+	isType(t, std::is_arithmetic<Valuetype>());										//вызываем перегруженный метод
+}
+
 
 template<typename T>						//шаблон функции для сортировки по модулю
 void absSort(T& t) {
@@ -85,21 +90,11 @@ void Separate(const T& t, ContainerOne& one, ContainerTwo& two, Predicate predic
 
 enum class COLORS:unsigned char {BLUE,GREEN,RED};														
 
-template<typename T>																					
-std::map<T,std::string> enumToStringMap;
-
 template<typename T>
-std::map<std::string, T> stringToEnumMap;
+std::map<std::string, T> stringEnumMap;
 
 template<>
-std::map<COLORS, std::string> enumToStringMap<COLORS> {
-	{COLORS::BLUE,"blue"},
-	{COLORS::GREEN,"green"},
-	{COLORS::RED,"red"}
-
-};
-template<>
-std::map<std::string, COLORS>stringToEnumMap<COLORS> {
+std::map<std::string, COLORS>stringEnumMap<COLORS> {
 	{"blue",COLORS::BLUE},
 	{"green",COLORS::GREEN},
 	{"red",COLORS::RED}
@@ -107,18 +102,19 @@ std::map<std::string, COLORS>stringToEnumMap<COLORS> {
 
 template<typename T>
 std::string enumToString(const T& t) {
-	auto it = enumToStringMap<T>.find(t);
-	if (it!=enumToStringMap<T>.end())
+	for (const auto& pair: stringEnumMap<T>)
 	{
-		return it->second;
-	}
-	throw std::runtime_error("Enum value not foud");
+		if (pair.second==t)
+		{
+			return pair.first;
+		}
+	}throw std::runtime_error("Enum value not foud");
 }
 
 template<typename T>
 T stringToEnum(const std::string& str) {
-	auto it = stringToEnumMap<T>.find(str);
-	if (it!=stringToEnumMap<T>.end())
+	auto it = stringEnumMap<T>.find(str);
+	if (it!= stringEnumMap<T>.end())
 	{
 		return it->second;
 	}throw std::runtime_error("String value not found");

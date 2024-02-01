@@ -11,7 +11,7 @@ public:
     }
     MyUniquePTR(const MyUniquePTR&) = delete;                               // Запрещаем копирование
     MyUniquePTR& operator=(const MyUniquePTR&) = delete;                    // Запрещаем присваивание
-    MyUniquePTR(MyUniquePTR&& moving) noexcept: pointer(moving.pointer) { // Реализация перемещения
+    MyUniquePTR(MyUniquePTR&& moving) noexcept: pointer(moving.pointer) {   // Реализация перемещения
         moving.pointer = nullptr;
     }
     MyUniquePTR& operator=(MyUniquePTR&& moving) noexcept {
