@@ -19,7 +19,7 @@ void isType(T& t,std::true_type) {			//шаблон функции для инверсии значений
 		val = -val;							//инверсия значений 
 	}
 }
-template<typename T>						//перегруженная функция для инверсии контецнеров
+template<typename T>						//перегруженная функция для инверсии контейнеров
 void isType(T& t,std::false_type) {
 	for (auto& val:t) {
 		for (auto& str : val) {

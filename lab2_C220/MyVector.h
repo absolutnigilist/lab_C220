@@ -45,11 +45,9 @@ public:
 
 		}
 	}
-	void sort() {
-		std::sort(this->begin(), this->end());
-	}
-	template<typename Compare>
-	void sort(Compare comparator) {
+	
+	template<typename Compare = std::less<>>
+	void sort(Compare comparator=Compare() ) {
 		std::sort(this->begin(), this->end(), comparator);
 	}
 	size_t size() const {
@@ -76,4 +74,9 @@ public:
 	typename std::vector<T>::const_iterator end()const {
 		return std::vector<T>::end();
 	}
+	
 };
+
+/*void sort() {
+		std::sort(this->begin(), this->end());
+	}*/
