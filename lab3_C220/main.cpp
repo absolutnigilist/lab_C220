@@ -18,13 +18,21 @@ int main() {
 	Print(q1);
 	MyQueue < MyString >  q2 = q1;
 	Print(q2);
-	MyQueue < MyString >  q22 = std::move(q1);
-	Print(q22);
+	//MyQueue < MyString >  q22 = std::move(q1);
+	//Print(q22);
+	
+	/*try {
+		q22.resize(2);
+	}
+	catch (const std::invalid_argument& e) {
+		std::cerr << "Caught an std::invalid_argument: " << e.what() << std::endl;
+	}*/
 
 	MyQueue < MyString >  q3{ 10, MyString("!")}; //очередь должна содержать 10 элементов со строкой «!» 
 	Print(q3);
-	q1 = q3;
+	q3 = q1;
 	Print(q1);
+	Print(q3);
 	q2 = MyQueue < MyString >(5, MyString("?"));
 	Print(q2);
 	q1 = { MyString("bbb"), MyString("ssss")};

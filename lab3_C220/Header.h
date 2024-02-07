@@ -54,16 +54,16 @@ public:
 			push(val);
 		} 
 	}																																																																																			
-	MyQueue(const MyQueue& other) :data(new T[other.capacity]), size(other.size), capacity(other.capacity), head(other.head), tail(other.tail) {//консутрктор копирования
+	MyQueue(const MyQueue& other) :size(other.size), capacity(other.size+1), head(0), tail(other.size), data(new T[capacity]) {//консутрктор копирования
 		for (size_t i = 0; i < other.size; ++i)
 		{
-			data[(head + i) % capacity] = other.data[(other.head+i)%other.capacity];
+			data[i] = other.data[(other.head+i)%other.capacity];
 		}
 	}
 	MyQueue(MyQueue&& other)noexcept :head(other.head), tail(other.tail), size(other.size), capacity(other.capacity),data(other.data) {			//move конструктор копирования
 		other.data = nullptr;
 		other.size = 0;
-		other.capacity = 2;
+		other.capacity = 1;
 	}
 	MyQueue(size_t n, const T& val) : capacity(n+1), size(n), head(0), tail(0), data(new T[capacity]) {											//перегруженный конструктор с параметрами
 		for (size_t i = 0; i < n; ++i) {
@@ -71,20 +71,29 @@ public:
 		}
 		tail = n % capacity;
 	}
-	MyQueue& operator=(const MyQueue& other) {																									//оператор присваивания
-		if (this!=&other)
-		{
-			T* new_data = new T[other.capacity];
-			for (size_t i = 0; i < other.size; ++i)
-			{
-				new_data[i] = other.data[(other.head + 1) % other.capacity];
+	MyQueue& operator=(const MyQueue& other) {
+		if (this != &other) { // Проверка на самоприсваивание
+			if (other.size >= capacity) {
+				// Требуется перераспределение памяти
+				T* new_data = new T[other.size + 1];
+				for (size_t i = 0; i < other.size; ++i) {
+					new_data[i] = other.data[(other.head + i) % other.capacity];
+				}
+				delete[] data;
+				data = new_data;
+				capacity = other.size+1;
 			}
-			delete[]data;
-			data = new_data;
+			else 
+			{
+				// Перераспределение не требуется, просто копируем элементы
+				for (size_t i = 0; i < other.size; ++i) {
+					data[i] = other.data[(other.head + i) % other.capacity];
+				}
+				// Для элементов, которые могут оставаться в старом буфере и не перезаписываются новыми, очистка не требуется
+			}
 			size = other.size;
-			capacity = other.capacity;
 			head = 0;
-			tail = other.size;
+			tail = size % capacity; // Обновляем tail согласно новому размеру
 		}
 		return *this;
 	}
@@ -102,10 +111,28 @@ public:
 		}
 		return *this;
 	}
-	//MyQueue& operator=(MyQueue other) {																										//оператор присваивания
-	//	swap(*this, other);
-	//	return *this;
-	//}
+	MyQueue& operator=(MyQueue&& other) noexcept {
+		if (this != &other) { // Проверка на самоприсваивание
+			delete[] data; // Освобождаем существующие ресурсы
+
+			// Переносим владение ресурсами из other в *this
+			data = other.data;
+			size = other.size;
+			capacity = other.capacity;
+			head = other.head;
+			tail = other.tail;
+
+			// Обнуляем ресурсы в other
+			other.data = nullptr;
+			other.size = 0;
+			other.capacity = 0;
+			other.head = 0;
+			other.tail = 0;
+		}
+		return *this;
+	}
+
+	
 	~MyQueue() {																																//деструктор
 			delete[]data;
 	}
@@ -129,11 +156,10 @@ public:
 		return result;
 
 	}
+	
 	void resize(size_t new_capacity) {																											//метод для изменения размера контейнера
-		
-		if (new_capacity<size)
-		{
-			new_capacity = size;
+		if (new_capacity < size) {
+			throw std::invalid_argument("New capacity must be greater than or equal to the current size.");
 		}
 		T* new_data = new T[new_capacity];
 		for (size_t i = 0; i < size; ++i)
@@ -145,15 +171,7 @@ public:
 		head = 0;
 		tail = size;
 		capacity = new_capacity;
-	}
-	/*static void swap(MyQueue& first, MyQueue& second) {
-		using std::swap;
-		swap(first.head, second.head);
-		swap(first.tail, second.tail);
-		swap(first.size, second.size);
-		swap(first.capacity, second.capacity);
-		swap(first.data, second.data);
-	}	*/																				 
+	}																 
 	
 	iterator begin() const{																						//итератора на начало								
 		return iterator(this, head);
