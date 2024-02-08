@@ -20,8 +20,10 @@ void Modify(std::vector<std::unique_ptr<std::string>>& str,const std::string& su
 	}
 }
 struct Deleter {
+	size_t count;
+	Deleter(size_t _count = 0) :count(_count) {}
 	void operator()(std::string* const ptr[]) {
-		for (size_t i = 0; i < 3; ++i)
+		for (size_t i = 0; i < count; ++i)
 		{
 			delete ptr[i];
 		}

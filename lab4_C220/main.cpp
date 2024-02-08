@@ -192,7 +192,7 @@ int main()
 		pq.push(7); pq.push(8); pq.push(9);
 		PrintAdapter(pq);
 		std::priority_queue<int, std::vector<int>, Comparator> pq1;
-		pq1.push(7); pq1.push(8); pq1.push(9);
+		pq1.push(11); pq1.push(12); pq1.push(13);
 		PrintAdapter(pq1);
 	}
 

@@ -98,7 +98,7 @@ int main()
 		 //освобождения памяти
 
 			std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
-			std::unique_ptr<std::string* [], Deleter> ptr(arStrPtr, Deleter());
+			std::unique_ptr<std::string* [], Deleter> ptr(arStrPtr, Deleter(sizeof(arStrPtr) / sizeof(arStrPtr[0])));
 			
 			__asm nop
 			// Освобождение памяти с использованием пользовательского делетера
@@ -167,7 +167,7 @@ int main()
 	//Задание 3.
 	{
 		//Дан массив элементов типа string
-		std::string strings[] = { "abc", "123", "qwerty", "#$%" };
+		std::string strings[] = { "abc", "123", "qwerty", "#$%", "123abc"};
 
 		//До завершения фрагмента строки должны существовать в единственном экземпляре.
 		//Требуется обеспечить манипулирование строками а) без копирования и б) без изменения порядка
@@ -302,6 +302,10 @@ int main()
 
 		std::cout << "\nFamily tree for Adam:" << std::endl;
 		adam->printFamilyTree();
+
+		std::cout << "\nChildren and their parents:" << std::endl;
+		eve->printChildrenParents(); // Printing Eve's children and their parents
+		adam->printChildrenParents(); // Printing Adam's children and their parents
 		
 		__asm nop
 	}

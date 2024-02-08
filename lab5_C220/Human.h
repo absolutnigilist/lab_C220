@@ -33,5 +33,15 @@ public:
             }
         }
     }
-
+        //Печать родителей детей
+        void printChildrenParents() const {
+            for (auto& child_weak : children) {
+                if (auto child = child_weak.lock()) {
+                    std::cout << child->name << "'s parents: ";
+                    if (child->mother) std::cout << "Mother: " << child->mother->name << ", ";
+                    if (child->father) std::cout << "Father: " << child->father->name;
+                    std::cout << std::endl;
+                }
+            }
+        }
 };
