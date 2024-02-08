@@ -91,30 +91,7 @@ constexpr int binaryLiteralToValue(const char* binary)
 	
 	template <typename T>
 	void PrintAdapter(T& adapter) {
-		if constexpr (std::is_same_v<T, std::stack<typename T::value_type, typename T::container_type>>|| std::is_same_v<T, std::priority_queue<typename T::value_type, typename T::container_type, std::less<typename T::value_type>>>) {
-			while (!adapter.empty()) {
-				if constexpr (std::is_pointer_v<typename T::value_type>) {
-					std::cout << *(adapter.top()) << " ";
-				}
-				else {
-					std::cout << adapter.top() << " ";
-				}
-				adapter.pop();
-			}
-		}
-		/*else if constexpr (std::is_same_v<T, std::priority_queue<typename T::value_type, typename T::container_type, std::less<typename T::value_type>>>)
-		{
-			while (!adapter.empty()) {
-				if constexpr (std::is_pointer_v<typename T::value_type>) {
-					std::cout << *(adapter.top()) << " ";
-				}
-				else {
-					std::cout << adapter.top() << " ";
-				}
-				adapter.pop();
-			}
-		}*/
-		else if constexpr (std::is_same_v<T, std::queue<typename T::value_type, typename T::container_type>>) {
+		if constexpr (std::is_same_v<T, std::queue<typename T::value_type, typename T::container_type>>) {
 			while (!adapter.empty()) {
 				if constexpr (std::is_pointer_v<typename T::value_type>) {
 					std::cout << *(adapter.front()) << " ";
@@ -124,6 +101,19 @@ constexpr int binaryLiteralToValue(const char* binary)
 				}
 				adapter.pop();
 			}
+		}
+		else {
+			while (!adapter.empty()) {
+				if constexpr (std::is_pointer_v<typename T::value_type>) {
+					std::cout << *(adapter.top()) << " ";
+				}
+				else {
+					std::cout << adapter.top() << " ";
+				}
+				adapter.pop();
+			}
+
+
 		}
 		std::cout << '\n';
 	}
